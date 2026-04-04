@@ -120,7 +120,6 @@ public:
         // Extract digits (skip sign if present)
         // Store in 'number'
         // Call removeLeadingZeros()
-
         string numString=str;
         if (!numString.empty() && numString[0]=='-'){
             isNegative=true;
@@ -148,6 +147,11 @@ public:
     // Assignment operator
     BigInt& operator=(const BigInt& other) {
         // TODO: Implement this operator
+        if(this == &other){
+            return *this;
+        }
+        number = other.number;
+        isNegative = other.isNegative;
         return *this;
     }
 
