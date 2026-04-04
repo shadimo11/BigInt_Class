@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdint>
 using namespace std;
 
 class BigInt {
@@ -11,7 +12,7 @@ class BigInt {
         size_t i = 0;
         while (i < number.size() - 1 && number[i] == '0')
             i++;
-        
+
         number = number.substr(i);
         if (number == "0")
             isNegative = false;
@@ -22,7 +23,7 @@ class BigInt {
     int compareMagnitude(const BigInt& other) const {
         if (number.size() != other.number.size())
             return (number.size() > other.number.size()) ? 1 : -1;
-        
+
         if (number == other.number)
             return 0;
 
@@ -58,14 +59,14 @@ class BigInt {
         }
         for (int l = 0, r = (int)result.size() - 1; l < r; l++, r--)
             swap(result[l], result[r]);
-        
+
         return result.empty() ? "0" : result;
     }
 
     static string mulMagByDigit(const string& a, int d) {
         if (d == 0)
             return "0";
-        
+
         string result;
         int carry = 0;
         for (int i = (int)a.size() - 1; i >= 0; i--)
@@ -81,14 +82,14 @@ class BigInt {
         }
         for (int l = 0, r = (int)result.size() - 1; l < r; l++, r--)
             swap(result[l], result[r]);
-        
+
         return result;
     }
 
     static bool magLE(const string& a, const string& b){
         if (a.size() != b.size())
             return a.size() < b.size();
-        
+
         return a <= b;
     }
 
@@ -130,7 +131,7 @@ public:
         }
         number=numString;
         removeLeadingZeros();
-        
+
     }
 
     // Copy constructor
@@ -222,13 +223,15 @@ public:
 
     // Convert BigInt to string representation
     string toString() const {
-        // TODO: Implement this function
-        return "";
+        if (isNegative && number != "0"){
+            return "-" + number;
+        }
+        return number;
     }
 
     // Output stream operator (for printing)
     friend ostream& operator<<(ostream& os, const BigInt& num) {
-        if (num.isNegative) {
+        if (num.isNegative && num.number != "0") {
             os << '-';
         }
         os << num.number;
@@ -237,7 +240,10 @@ public:
 
     // Input stream operator (for reading from input)
     friend istream& operator>>(istream& is, BigInt& num) {
-        // TODO: Implement this operator
+           string s;
+           is >> s;
+           BigInt temp(s);
+           num = temp;
         return is;
     }
 
