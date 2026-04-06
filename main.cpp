@@ -188,14 +188,74 @@ public:
     }
 
     // Division assignment operator (x /= y)
-    BigInt& operator/=(const BigInt& other) {
-        // TODO: Implement this operator
+    BigInt &operator/=(const BigInt &other)
+    {
+        if (other.number == "0")
+            throw runtime_error("Division by zero");
+
+        if (compareMagnitude(other) < 0)
+        {
+            number = "0";
+            isNegative = false;
+            return *this;
+        }
+
+        bool resultNeg = (isNegative != other.isNegative);
+
+        string divisor = other.number;
+        string quotient = "";
+        string current = "";
+
+        for (int i = 0; i < (int)number.size(); i++)
+        {
+            current += number[i];
+
+            size_t start = 0;
+            while (start < current.size() - 1 && current[start] == '0')
+                start++;
+            current = current.substr(start);
+
+            int q = 0;
+            for (int d = 9; d >= 1; d--)
+            {
+                if (magLE(mulMagByDigit(divisor, d), current))
+                {
+                    q = d;
+                    break;
+                }
+            }
+
+            quotient += (char)('0' + q);
+            if (q > 0)
+                current = subtractMagnitudes(current, mulMagByDigit(divisor, q));
+        }
+
+        size_t pos = 0;
+        while (pos < quotient.size() - 1 && quotient[pos] == '0')
+            pos++;
+        number = quotient.substr(pos);
+
+        isNegative = resultNeg;
+        removeLeadingZeros();
         return *this;
     }
 
     // Modulus assignment operator (x %= y)
-    BigInt& operator%=(const BigInt& other) {
-        // TODO: Implement this operator
+    BigInt &operator%=(const BigInt &other)
+    {
+        if (other.number == "0")
+            throw runtime_error("Division by zero");
+
+        bool dividendNeg = isNegative;
+
+        BigInt q = *this / other;
+        BigInt p = q * other;
+        *this -= p;
+
+        if (number != "0")
+            isNegative = dividendNeg;
+
+        removeLeadingZeros();
         return *this;
     }
 
@@ -279,16 +339,14 @@ BigInt operator*(BigInt lhs, const BigInt& rhs) {
 
 // Binary division operator (x / y)
 BigInt operator/(BigInt lhs, const BigInt& rhs) {
-    BigInt result;
-    // TODO: Implement this operator
-    return result;
+    lhs /= rhs;
+    return lhs;
 }
 
 // Binary modulus operator (x % y)
 BigInt operator%(BigInt lhs, const BigInt& rhs) {
-    BigInt result;
-    // TODO: Implement this operator
-    return result;
+    lhs %= rhs;
+    return lhs;
 }
 
 // Equality comparison operator (x == y)
