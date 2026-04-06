@@ -156,17 +156,21 @@ public:
     }
 
     // Unary negation operator (-x)
-    BigInt operator-() const {
+    BigInt operator-() {
         BigInt result;
-        // TODO: Implement negation logic
+        if(number == "0"){
+            return *this;
+        }
+        result = *this;
+        result.isNegative=!result.isNegative;
+
         return result;
     }
 
     // Unary plus operator (+x)
     BigInt operator+() const {
-        BigInt result;
-        // TODO: Implement this operator
-        return result;
+
+        return *this;
     }
 
     // Addition assignment operator (x += y)
