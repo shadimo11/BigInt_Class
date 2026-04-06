@@ -182,6 +182,11 @@ public:
     // Subtraction assignment operator (x -= y)
     BigInt& operator-=(const BigInt& other) {
         // TODO: Implement this operator
+        BigInt neg = other;
+        if(neg.number != "0"){
+            neg.isNegative = !neg.isNegative;
+        }
+        *this += neg;
         return *this;
     }
 
@@ -271,6 +276,8 @@ BigInt operator+(BigInt lhs, const BigInt& rhs) {
 BigInt operator-(BigInt lhs, const BigInt& rhs) {
     BigInt result;
     // TODO: Implement this operator
+    lhs -= rhs;
+    result = lhs;
     return result;
 }
 
