@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstdint>
+#include <vector>
 using namespace std;
 
 class BigInt {
@@ -201,8 +202,52 @@ public:
     // Multiplication assignment operator (x *= y)
     BigInt& operator*=(const BigInt& other) {
         // TODO: Implement this operator
+        if (number == "0" || other.number == "0") {
+            number = "0";           
+            isNegative = false;     
+            return *this;          
+        }
+        bool resultNeg= (isNegative != other.isNegative);
+        vector<int> digits1, digits2;
+        for (int i = number.length() - 1; i >= 0; i--) {
+            digits1.push_back(number[i] - '0');  // '5' becomes 5
+         }
+        for (int i = other.number.length() - 1; i >= 0; i--) {
+            digits2.push_back(other.number[i] - '0');
+        }
+        int len1=digits1.size();
+        int len2=digits2.size();
+        vector<int> result(len1 + len2, 0);
+        for (int i=0;i<len1;i++){
+            for (int j=0;j<len2;j++){
+                result[i + j] += digits1[i] * digits2[j];
+            }
+        }
+            int carry = 0;
+        for (size_t i = 0; i < result.size(); i++) {
+            result[i] += carry;
+            carry = result[i] / 10;
+            result[i] %= 10;
+        }
+        
+       
+        while (result.size() > 1 && result.back() == 0) {
+            result.pop_back();
+        }
+        
+        
+        string newNumber;
+        for (int i = result.size() - 1; i >= 0; i--) {
+            newNumber += (result[i] + '0');
+        }
+    
+    
+        number = newNumber;
+        isNegative = resultNeg;
+        
         return *this;
     }
+      
 
     // Division assignment operator (x /= y)
     BigInt& operator/=(const BigInt& other) {
@@ -288,9 +333,9 @@ BigInt operator-(BigInt lhs, const BigInt& rhs) {
 
 // Binary multiplication operator (x * y)
 BigInt operator*(BigInt lhs, const BigInt& rhs) {
-    BigInt result;
+    
     // TODO: Implement this operator
-    return result;
+    return lhs*=rhs;
 }
 
 // Binary division operator (x / y)
@@ -360,15 +405,15 @@ int main() {
     cout << "c (zero): " << c << endl;            // Should print "0"
     cout << "d (copy of a): " << d << endl << endl; // Should print "12345"D
 
-    /*
+    
     // Test 2: Arithmetic operations
-    cout << "2. Arithmetic operations:" << endl;
-    cout << "a + b = " << a + b << endl;          // Should calculate 12345 + (-67890)
-    cout << "a - b = " << a - b << endl;          // Should calculate 12345 - (-67890)
+    //cout << "2. Arithmetic operations:" << endl;
+    //cout << "a + b = " << a + b << endl;          // Should calculate 12345 + (-67890)
+    //cout << "a - b = " << a - b << endl;          // Should calculate 12345 - (-67890)
     cout << "a * b = " << a * b << endl;          // Should calculate 12345 * (-67890)
-    cout << "b / a = " << b / a << endl;          // Should calculate (-67890) / 12345
-    cout << "a % 100 = " << a % BigInt(100) << endl << endl; // Should calculate 12345 % 100
-
+    //cout << "b / a = " << b / a << endl;          // Should calculate (-67890) / 12345
+    //cout << "a % 100 = " << a % BigInt(100) << endl << endl; // Should calculate 12345 % 100
+    /*
     // Test 3: Relational operators
     cout << "3. Relational operators:" << endl;
     cout << "a == d: " << (a == d) << endl;       // Should be true (12345 == 12345)
