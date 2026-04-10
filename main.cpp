@@ -4,6 +4,22 @@
 #include <vector>
 using namespace std;
 
+class BigInt;  // Forward declaration
+
+// Forward declarations for operators
+BigInt operator+(BigInt lhs, const BigInt& rhs);
+BigInt operator-(BigInt lhs, const BigInt& rhs);
+BigInt operator*(BigInt lhs, const BigInt& rhs);
+BigInt operator/(BigInt lhs, const BigInt& rhs);
+BigInt operator%(BigInt lhs, const BigInt& rhs);
+
+bool operator==(const BigInt& lhs, const BigInt& rhs);
+bool operator!=(const BigInt& lhs, const BigInt& rhs);
+bool operator<(const BigInt& lhs, const BigInt& rhs);
+bool operator<=(const BigInt& lhs, const BigInt& rhs);
+bool operator>(const BigInt& lhs, const BigInt& rhs);
+bool operator>=(const BigInt& lhs, const BigInt& rhs);
+
 class BigInt {
     string number;    // Stores the number as a string
     bool isNegative;  // True if number is negative
@@ -176,7 +192,7 @@ public:
         {
             int cmp = compareMagnitude(other);
             if (cmp == 0)
-            { 
+            {
                 number = "0"; isNegative = false;
             }
             else if (cmp > 0)
@@ -184,8 +200,8 @@ public:
                 number = subtractMagnitudes(number, other.number);
             }
             else
-            { 
-                number = subtractMagnitudes(other.number, number); 
+            {
+                number = subtractMagnitudes(other.number, number);
                 isNegative = other.isNegative;
             }
         }
@@ -203,9 +219,9 @@ public:
     BigInt& operator*=(const BigInt& other) {
         // TODO: Implement this operator
         if (number == "0" || other.number == "0") {
-            number = "0";           
-            isNegative = false;     
-            return *this;          
+            number = "0";
+            isNegative = false;
+            return *this;
         }
         bool resultNeg= (isNegative != other.isNegative);
         vector<int> digits1, digits2;
@@ -229,25 +245,25 @@ public:
             carry = result[i] / 10;
             result[i] %= 10;
         }
-        
-       
+
+
         while (result.size() > 1 && result.back() == 0) {
             result.pop_back();
         }
-        
-        
+
+
         string newNumber;
         for (int i = result.size() - 1; i >= 0; i--) {
             newNumber += (result[i] + '0');
         }
-    
-    
+
+
         number = newNumber;
         isNegative = resultNeg;
-        
+
         return *this;
     }
-      
+
 
     // Division assignment operator (x /= y)
     BigInt &operator/=(const BigInt &other)
@@ -324,13 +340,15 @@ public:
     // Pre-increment operator (++x)
     BigInt& operator++() {
         // TODO: Implement this operator
+        *this += BigInt(1);
         return *this;
     }
 
     // Post-increment operator (x++)
     BigInt operator++(int) {
-        BigInt temp;
+        BigInt temp(*this);
         // TODO: Implement this operator
+        ++(*this);
         return temp;
     }
 
@@ -393,7 +411,7 @@ BigInt operator-(BigInt lhs, const BigInt& rhs) {
 
 // Binary multiplication operator (x * y)
 BigInt operator*(BigInt lhs, const BigInt& rhs) {
-    
+
     // TODO: Implement this operator
     return lhs*=rhs;
 }
@@ -460,7 +478,7 @@ int main() {
     cout << "c (zero): " << c << endl;            // Should print "0"
     cout << "d (copy of a): " << d << endl << endl; // Should print "12345"D
 
-    
+
     // Test 2: Arithmetic operations
     //cout << "2. Arithmetic operations:" << endl;
     //cout << "a + b = " << a + b << endl;          // Should calculate 12345 + (-67890)
@@ -479,8 +497,11 @@ int main() {
 
     // Test 4: Unary operators and increments
     cout << "4. Unary operators and increments:" << endl;
+    */
     cout << "-a: " << -a << endl;                 // Should print "-12345"
     cout << "++a: " << ++a << endl;               // Should increment and print "12346"
+    cout << "a++: " << a++ << "\na: " << a << endl;               // Should print "12346" increment and
+    /*
     cout << "a--: " << a-- << endl;               // Should print "12346" then decrement
     cout << "a after decrement: " << a << endl << endl; // Should print "12345"
 
