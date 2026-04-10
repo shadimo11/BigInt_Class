@@ -169,7 +169,7 @@ public:
     }
 
     // Unary negation operator (-x)
-    BigInt operator-() const {
+    BigInt operator-() const{
         BigInt result;
         // TODO: Implement negation logic
         return result;
@@ -211,13 +211,14 @@ public:
 
     // Subtraction assignment operator (x -= y)
     BigInt& operator-=(const BigInt& other) {
-        // TODO: Implement this operator
+        BigInt neg(other);
+        if (neg.number != "0") neg.isNegative = !neg.isNegative;
+        *this += neg;
         return *this;
     }
 
     // Multiplication assignment operator (x *= y)
     BigInt& operator*=(const BigInt& other) {
-        // TODO: Implement this operator
         if (number == "0" || other.number == "0") {
             number = "0";
             isNegative = false;
@@ -325,9 +326,13 @@ public:
             throw runtime_error("Division by zero");
 
         bool dividendNeg = isNegative;
+          // won't compile cause the operaters used are outside the class
+        BigInt q = *this;
+        q/=other;
 
-        BigInt q = *this / other;
-        BigInt p = q * other;
+        BigInt p = q;
+        p*=q;
+
         *this -= p;
 
         if (number != "0")
@@ -404,15 +409,13 @@ BigInt operator+(BigInt lhs, const BigInt& rhs) {
 
 // Binary subtraction operator (x - y)
 BigInt operator-(BigInt lhs, const BigInt& rhs) {
-    BigInt result;
-    // TODO: Implement this operator
-    return result;
+    lhs -= rhs;
+    return lhs;
 }
 
 // Binary multiplication operator (x * y)
 BigInt operator*(BigInt lhs, const BigInt& rhs) {
 
-    // TODO: Implement this operator
     return lhs*=rhs;
 }
 
@@ -430,20 +433,29 @@ BigInt operator%(BigInt lhs, const BigInt& rhs) {
 
 // Equality comparison operator (x == y)
 bool operator==(const BigInt& lhs, const BigInt& rhs) {
-    // TODO: Implement this operator
-    return false;
+    return (lhs.isNegative==rhs.isNegative && lhs.number == rhs.number) ;
+
 }
 
 // Inequality comparison operator (x != y)
 bool operator!=(const BigInt& lhs, const BigInt& rhs) {
-    // TODO: Implement this operator
-    return false;
+
+    return !(lhs==rhs);
 }
 
 // Less-than comparison operator (x < y)
 bool operator<(const BigInt& lhs, const BigInt& rhs) {
-    // TODO: Implement this operator
+    if(lhs.isNegative&& !rhs.isNegative){
+       return true;
+    }else if(!lhs.isNegative&& rhs.isNegative){
     return false;
+    }
+
+    if(lhs.isNegative==true){
+           return (lhs.compareMagnitude(rhs)>0);
+    }else {return (lhs.compareMagnitude(rhs)<0); }
+
+
 }
 
 // Less-than-or-equal comparison operator (x <= y)
@@ -469,7 +481,7 @@ int main() {
 
     // Test 1: Constructors and basic output
     cout << "1. Constructors and output:" << endl;
-    BigInt a(12345);              // Should create BigInt from integer
+    BigInt a(-12345);              // Should create BigInt from integer
     BigInt b("-67890");           // Should create BigInt from string
     BigInt c("0");                // Should handle zero correctly
     BigInt d = a;                 // Should use copy constructor
@@ -483,7 +495,7 @@ int main() {
     //cout << "2. Arithmetic operations:" << endl;
     //cout << "a + b = " << a + b << endl;          // Should calculate 12345 + (-67890)
     //cout << "a - b = " << a - b << endl;          // Should calculate 12345 - (-67890)
-    cout << "a * b = " << a * b << endl;          // Should calculate 12345 * (-67890)
+    //cout << "a * b = " << a * b << endl;          // Should calculate 12345 * (-67890)
     //cout << "b / a = " << b / a << endl;          // Should calculate (-67890) / 12345
     //cout << "a % 100 = " << a % BigInt(100) << endl << endl; // Should calculate 12345 % 100
     /*
