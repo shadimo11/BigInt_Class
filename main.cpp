@@ -330,7 +330,7 @@ public:
         q/=other;
 
         BigInt p = q;
-        p*=q;
+        p *= other;            
 
         *this -= p;
 
@@ -356,14 +356,14 @@ public:
 
     // Pre-decrement operator (--x)
     BigInt& operator--() {
-        // TODO: Implement this operator
+        *this -= BigInt(1);
         return *this;
     }
 
     // Post-decrement operator (x--)
     BigInt operator--(int) {
-        BigInt temp;
-        // TODO: Implement this operator
+        BigInt temp(*this);
+        --(*this);
         return temp;
     }
 
@@ -489,13 +489,13 @@ int main() {
 
 
     // Test 2: Arithmetic operations
-    //cout << "2. Arithmetic operations:" << endl;
-    //cout << "a + b = " << a + b << endl;          // Should calculate 12345 + (-67890)
-    //cout << "a - b = " << a - b << endl;          // Should calculate 12345 - (-67890)
-    //cout << "a * b = " << a * b << endl;          // Should calculate 12345 * (-67890)
-    //cout << "b / a = " << b / a << endl;          // Should calculate (-67890) / 12345
-    //cout << "a % 100 = " << a % BigInt(100) << endl << endl; // Should calculate 12345 % 100
-    /*
+    cout << "2. Arithmetic operations:" << endl;
+    cout << "a + b = " << a + b << endl;          // Should calculate 12345 + (-67890)
+    cout << "a - b = " << a - b << endl;          // Should calculate 12345 - (-67890)
+    cout << "a * b = " << a * b << endl;          // Should calculate 12345 * (-67890)
+    cout << "b / a = " << b / a << endl;          // Should calculate (-67890) / 12345
+    cout << "a % 100 = " << a % BigInt(100) << endl << endl; // Should calculate 12345 % 100
+    
     // Test 3: Relational operators
     cout << "3. Relational operators:" << endl;
     cout << "a == d: " << (a == d) << endl;       // Should be true (12345 == 12345)
@@ -506,11 +506,11 @@ int main() {
 
     // Test 4: Unary operators and increments
     cout << "4. Unary operators and increments:" << endl;
-    */
+    
     cout << "-a: " << -a << endl;                 // Should print "-12345"
     cout << "++a: " << ++a << endl;               // Should increment and print "12346"
     cout << "a++: " << a++ << "\na: " << a << endl;               // Should print "12346" increment and
-    /*
+    
     cout << "a--: " << a-- << endl;               // Should print "12346" then decrement
     cout << "a after decrement: " << a << endl << endl; // Should print "12345"
 
@@ -535,6 +535,6 @@ int main() {
     cout << "Negative multiplication: " << BigInt(-5) * BigInt(3) << endl;  // Should be "-15"
     cout << "Negative division: " << BigInt(-10) / BigInt(3) << endl;       // Should be "-3"
     cout << "Negative modulus: " << BigInt(-10) % BigInt(3) << endl;        // Should be "-1"
-    */
+    
     return 0;
 }
