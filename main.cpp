@@ -153,7 +153,7 @@ public:
     }
 
     // Unary negation operator (-x)
-    BigInt operator-() const {
+    BigInt operator-() const{
         BigInt result;
         // TODO: Implement negation logic
         return result;
