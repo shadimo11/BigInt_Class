@@ -430,20 +430,17 @@ bool operator<(const BigInt& lhs, const BigInt& rhs) {
 
 // Less-than-or-equal comparison operator (x <= y)
 bool operator<=(const BigInt& lhs, const BigInt& rhs) {
-    // TODO: Implement this operator
-    return false;
+    return (lhs < rhs) || (lhs == rhs);
 }
 
 // Greater-than comparison operator (x > y)
 bool operator>(const BigInt& lhs, const BigInt& rhs) {
-    // TODO: Implement this operator
-    return false;
+    return !(lhs <= rhs);
 }
 
 // Greater-than-or-equal comparison operator (x >= y)
 bool operator>=(const BigInt& lhs, const BigInt& rhs) {
-    // TODO: Implement this operator
-    return false;
+    return !(lhs < rhs);
 }
 
 int main() {
