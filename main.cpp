@@ -343,7 +343,6 @@ public:
 
     // Pre-increment operator (++x)
     BigInt& operator++() {
-        // TODO: Implement this operator
         *this += BigInt(1);
         return *this;
     }
@@ -351,7 +350,6 @@ public:
     // Post-increment operator (x++)
     BigInt operator++(int) {
         BigInt temp(*this);
-        // TODO: Implement this operator
         ++(*this);
         return temp;
     }
