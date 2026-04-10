@@ -164,22 +164,21 @@ public:
 
     // Assignment operator
     BigInt& operator=(const BigInt& other) {
-        // TODO: Implement this operator
+        if (this == &other) return *this;
+        number = other.number; isNegative = other.isNegative;
         return *this;
     }
 
     // Unary negation operator (-x)
     BigInt operator-() const{
-        BigInt result;
-        // TODO: Implement negation logic
-        return result;
+        BigInt r(*this);
+        if (r.number != "0") r.isNegative = !r.isNegative;
+        return r;
     }
 
     // Unary plus operator (+x)
     BigInt operator+() const {
-        BigInt result;
-        // TODO: Implement this operator
-        return result;
+        return BigInt(*this);
     }
 
     // Addition assignment operator (x += y)
