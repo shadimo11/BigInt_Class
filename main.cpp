@@ -156,7 +156,7 @@ public:
     }
 
     // Unary negation operator (-x)
-    BigInt operator-() {
+    BigInt operator-() const{
         BigInt result;
         if(number == "0"){
             return *this;
