@@ -390,9 +390,8 @@ BigInt operator+(BigInt lhs, const BigInt& rhs) {
 
 // Binary subtraction operator (x - y)
 BigInt operator-(BigInt lhs, const BigInt& rhs) {
-    BigInt result;
-    // TODO: Implement this operator
-    return result;
+    lhs -= rhs;
+    return lhs;
 }
 
 // Binary multiplication operator (x * y)
