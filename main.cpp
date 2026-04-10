@@ -195,13 +195,14 @@ public:
 
     // Subtraction assignment operator (x -= y)
     BigInt& operator-=(const BigInt& other) {
-        // TODO: Implement this operator
+        BigInt neg(other);
+        if (neg.number != "0") neg.isNegative = !neg.isNegative;
+        *this += neg;
         return *this;
     }
 
     // Multiplication assignment operator (x *= y)
     BigInt& operator*=(const BigInt& other) {
-        // TODO: Implement this operator
         if (number == "0" || other.number == "0") {
             number = "0";
             isNegative = false;
@@ -397,7 +398,6 @@ BigInt operator-(BigInt lhs, const BigInt& rhs) {
 // Binary multiplication operator (x * y)
 BigInt operator*(BigInt lhs, const BigInt& rhs) {
 
-    // TODO: Implement this operator
     return lhs*=rhs;
 }
 
