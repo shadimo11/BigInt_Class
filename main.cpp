@@ -4,6 +4,22 @@
 #include <vector>
 using namespace std;
 
+class BigInt;  // Forward declaration
+
+// Forward declarations for operators
+BigInt operator+(BigInt lhs, const BigInt& rhs);
+BigInt operator-(BigInt lhs, const BigInt& rhs);
+BigInt operator*(BigInt lhs, const BigInt& rhs);
+BigInt operator/(BigInt lhs, const BigInt& rhs);
+BigInt operator%(BigInt lhs, const BigInt& rhs);
+
+bool operator==(const BigInt& lhs, const BigInt& rhs);
+bool operator!=(const BigInt& lhs, const BigInt& rhs);
+bool operator<(const BigInt& lhs, const BigInt& rhs);
+bool operator<=(const BigInt& lhs, const BigInt& rhs);
+bool operator>(const BigInt& lhs, const BigInt& rhs);
+bool operator>=(const BigInt& lhs, const BigInt& rhs);
+
 class BigInt {
     string number;    // Stores the number as a string
     bool isNegative;  // True if number is negative
@@ -329,13 +345,15 @@ public:
     // Pre-increment operator (++x)
     BigInt& operator++() {
         // TODO: Implement this operator
+        *this += BigInt(1);
         return *this;
     }
 
     // Post-increment operator (x++)
     BigInt operator++(int) {
-        BigInt temp;
+        BigInt temp(*this);
         // TODO: Implement this operator
+        ++(*this);
         return temp;
     }
 
@@ -480,43 +498,46 @@ int main() {
     //cout << "a * b = " << a * b << endl;          // Should calculate 12345 * (-67890)
     //cout << "b / a = " << b / a << endl;          // Should calculate (-67890) / 12345
     //cout << "a % 100 = " << a % BigInt(100) << endl << endl; // Should calculate 12345 % 100
+    /*
+    // Test 3: Relational operators
+    cout << "3. Relational operators:" << endl;
+    cout << "a == d: " << (a == d) << endl;       // Should be true (12345 == 12345)
+    cout << "a != b: " << (a != b) << endl;       // Should be true (12345 != -67890)
+    cout << "a < b: " << (a < b) << endl;         // Should be false (12345 < -67890)
+    cout << "a > b: " << (a > b) << endl;         // Should be true (12345 > -67890)
+    cout << "c == 0: " << (c == BigInt(0)) << endl << endl; // Should be true (0 == 0)
 
-//    // Test 3: Relational operators
-//    cout << "3. Relational operators:" << endl;
-//cout << "a == d: " << (a == b) << endl;       // Should be true (12345 == 12345)
-  //  cout << "a != b: " << (a != b) << endl;       // Should be true (12345 != -67890)
-    //cout << "a < b: " << (a < b) << endl;         // Should be false (12345 < -67890)
-//    cout << "a > b: " << (a > b) << endl;         // Should be true (12345 > -67890)
-//    cout << "c == 0: " << (c == BigInt(0)) << endl << endl; // Should be true (0 == 0)
-//
-//    // Test 4: Unary operators and increments
-//    cout << "4. Unary operators and increments:" << endl;
-//    cout << "-a: " << -a << endl;                 // Should print "-12345"
-//    cout << "++a: " << ++a << endl;               // Should increment and print "12346"
-//    cout << "a--: " << a-- << endl;               // Should print "12346" then decrement
-//    cout << "a after decrement: " << a << endl << endl; // Should print "12345"
-//
-//    // Test 5: Large number operations
-//    cout << "5. Large number operations:" << endl;
-//    BigInt num1("12345678901234567890");
-//    BigInt num2("98765432109876543210");
-//    cout << "Very large addition: " << num1 + num2 << endl;
-//    cout << "Very large multiplication: " << num1 * num2 << endl << endl;
-//
-//    // Test 6: Edge cases and error handling
-//    cout << "6. Edge cases:" << endl;
-//    BigInt zero(0);
-//    BigInt one(1);
-//    try {
-//        BigInt result = one / zero;               // Should throw division by zero error
-//        cout << "Division by zero succeeded (unexpected)" << endl;
-//    } catch (const runtime_error& e) {
-//        cout << "Division by zero correctly threw error: " << e.what() << endl;
-//    }
-//    cout << "Multiplication by zero: " << one * zero << endl;        // Should be "0"
-//    cout << "Negative multiplication: " << BigInt(-5) * BigInt(3) << endl;  // Should be "-15"
-//    cout << "Negative division: " << BigInt(-10) / BigInt(3) << endl;       // Should be "-3"
-//    cout << "Negative modulus: " << BigInt(-10) % BigInt(3) << endl;        // Should be "-1"
-//
+    // Test 4: Unary operators and increments
+    cout << "4. Unary operators and increments:" << endl;
+    */
+    cout << "-a: " << -a << endl;                 // Should print "-12345"
+    cout << "++a: " << ++a << endl;               // Should increment and print "12346"
+    cout << "a++: " << a++ << "\na: " << a << endl;               // Should print "12346" increment and
+    /*
+    cout << "a--: " << a-- << endl;               // Should print "12346" then decrement
+    cout << "a after decrement: " << a << endl << endl; // Should print "12345"
+
+    // Test 5: Large number operations
+    cout << "5. Large number operations:" << endl;
+    BigInt num1("12345678901234567890");
+    BigInt num2("98765432109876543210");
+    cout << "Very large addition: " << num1 + num2 << endl;
+    cout << "Very large multiplication: " << num1 * num2 << endl << endl;
+
+    // Test 6: Edge cases and error handling
+    cout << "6. Edge cases:" << endl;
+    BigInt zero(0);
+    BigInt one(1);
+    try {
+        BigInt result = one / zero;               // Should throw division by zero error
+        cout << "Division by zero succeeded (unexpected)" << endl;
+    } catch (const runtime_error& e) {
+        cout << "Division by zero correctly threw error: " << e.what() << endl;
+    }
+    cout << "Multiplication by zero: " << one * zero << endl;        // Should be "0"
+    cout << "Negative multiplication: " << BigInt(-5) * BigInt(3) << endl;  // Should be "-15"
+    cout << "Negative division: " << BigInt(-10) / BigInt(3) << endl;       // Should be "-3"
+    cout << "Negative modulus: " << BigInt(-10) % BigInt(3) << endl;        // Should be "-1"
+    */
     return 0;
 }
